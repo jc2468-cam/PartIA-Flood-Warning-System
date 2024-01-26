@@ -23,7 +23,7 @@ def test_stations_by_distance():
     # Get dummy stations
     stations = dummy_stations()
 
-    # Sort dummy staions
+    # Sort dummy stations
     sorted_stations = stations_by_distance(stations, (0,90))
 
     assert [pair[0].name for pair in sorted_stations] == ["Station 2", "Station 3", "Station 1"]
