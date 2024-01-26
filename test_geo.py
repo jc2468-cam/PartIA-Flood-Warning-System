@@ -32,7 +32,7 @@ def test_stations_within_radius():
     # Get dummy stations
     stations = dummy_stations()
 
-    # Get staions with 3,500 km of (0,0)
+    # Get stations with 3,500 km of (0,0)
     near_stations = stations_within_radius(stations, (0,0), 3500)
 
     assert [station.name for station in near_stations] == ["Station 1", "Station 2"]
@@ -50,7 +50,7 @@ def test_stations_by_river():
     # Get dummy stations
     stations = dummy_stations()
 
-    # Get staions on each river
+    # Get stations on each river
     station_map = stations_by_river(stations)
 
     assert sum([station.name in ["Station 1", "Station 2"] for station in station_map["River 1"]]) == 2
