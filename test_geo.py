@@ -7,9 +7,9 @@ from math import pi
 
 
 def dummy_stations():
-    s1 = MonitoringStation("http://example.com/id/stations/1", "http://example.com/id/measures/1", "Station 1", (0,0), (0.1,0.2), "River 1", "Town 1")
+    s1 = MonitoringStation("http://example.com/id/stations/1", "http://example.com/id/measures/1", "Station 1", (0,0), (0.1,0.0), "River 1", "Town 1")
     s2 = MonitoringStation("http://example.com/id/stations/2", "http://example.com/id/measures/2", "Station 2", (0,30), (0.2,0.3), "River 1", "Town 2")
-    s3 = MonitoringStation("http://example.com/id/stations/3", "http://example.com/id/measures/3", "Station 3", (30,30), (0.3,0.4), "River 2", "Town 3")
+    s3 = MonitoringStation("http://example.com/id/stations/3", "http://example.com/id/measures/3", "Station 3", (30,30), None, "River 2", "Town 3")
     return [s1, s2, s3]
 
 def test_haversine():

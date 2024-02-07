@@ -86,14 +86,14 @@ def haversine(p1, p2):
 
 def rivers_station_number(stations, N):
     """
-    Determining the 'N' number of rivers with the greatest number of 'MonitoringStation's.
+    Determining the `N` number of rivers with the greatest number of `MonitoringStation`s.
 
     # Inputs
-    - 'stations': a 'list' of 'MonitoringStation's
-    - 'N': number of rivers with greatest number of 'MonitoringStation's
+    - `stations`: a `list` of `MonitoringStation`s
+    - `N`: number of rivers with greatest number of `MonitoringStation`s
 
     # Returns
-    A list of 'N' river name and number of station tuples, sorted by the number of stations.
+    A list of `N` river name and number of station tuples, sorted by the number of stations.
     If there are more rivers with the same number of stations as the Nth entry, they are also included in the list.
     """
     # Creating a dict of river name key and stations on river list value
