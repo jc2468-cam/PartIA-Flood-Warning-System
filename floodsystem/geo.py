@@ -103,5 +103,6 @@ def rivers_by_station_number(stations, N):
         b = len(stas)
         river_n_stations += [(a, b)]
     sorted_river_n_stations = sorted(river_n_stations, key = lambda x: x[1], reverse = True)
+    c = 1
 
     return print (sorted_river_n_stations[:N])
