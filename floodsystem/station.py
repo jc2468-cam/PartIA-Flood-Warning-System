@@ -39,3 +39,14 @@ class MonitoringStation:
         d += "   river:         {}\n".format(self.river)
         d += "   typical range: {}".format(self.typical_range)
         return d
+    
+    def typical_range_consistent(self):
+        a = self.typical_range
+        if a = None:
+            return False
+        elif a[1] < a[0]:
+            return False
+        elif a[1] >= a[0]:
+            return True
+        else:
+            raise AttributeError("Can't determine the range consistency")
