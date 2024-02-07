@@ -82,3 +82,26 @@ def haversine(p1, p2):
     """
     p1, p2 = [radians(e) for e in p1], [radians(e) for e in p2]
     return 12742 * asin(sqrt(sin(0.5 * (p1[0] - p2[0]))**2 + cos(p1[0])*cos(p2[0])*sin(0.5 * (p1[1] - p2[1]))**2))
+
+
+def rivers_by_station_number(stations, N):
+    """
+    Determining the 'N' number of rivers with the greatest number of 'MonitoringStation's.
+
+    # Inputs
+    - 'stations': a 'list' of 'MonitoringStation's
+    - 'N': number of rivers with greatest number of 'MonitoringStation's
+
+    # Returns
+    A list of 'N' river name and number of station tuples, sorted by the number of stations.
+    If there are more rivers with the same number of stations as the Nth entry, they are also included in the list.
+    """
+    river_stations = stations_by_river(stations)
+    river_n_stations = list()
+    for river, stas in river_stations.items():
+        a = river
+        b = len(stas)
+        river_n_stations += [(a, b)]
+
+
+    return print (river_n_stations[:N])
