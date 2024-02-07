@@ -52,7 +52,7 @@ class MonitoringStation:
 # Filtering function, giving a list of stations with inconsistent typical high/low data
 def inconsistent_typical_range_stations(stations):
     incon = list()
-    for station in range(len(stations)):
+    for station in stations:
         if MonitoringStation.typical_range_consistent(station) == False:
             incon += [station]
     return incon
