@@ -42,15 +42,12 @@ class MonitoringStation:
     
     # Method that checks the typical high/low range data for consistency
     def typical_range_consistent(self):
-        a = self.typical_range
-        if a == None: # When data is unavailable
+        if self.typical_range == None: # When data is unavailable
             return False
-        elif a[1] < a[0]: # When typical high is less than typical low
+        elif self.typical_range[1] < self.typical_range[0]: # When typical high is less than typical low
             return False
-        elif a[1] >= a[0]: # When typical high is greater or equal to typical low
+        elif self.typical_range[1] >= self.typical_range[0]: # When typical high is greater or equal to typical low
             return True
-        else:
-            raise AttributeError("Can't determine the range consistency")
 
 # Filtering function, giving a list of stations with inconsistent typical high/low data
 def inconsistent_typical_range_stations(stations):
