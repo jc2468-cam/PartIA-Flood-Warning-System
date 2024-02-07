@@ -29,7 +29,7 @@ def stations_within_radius(stations, centre, r):
     Filters a `list` of `MonitoringStation`s, returning ones which are within specified radius of geographic coordinate.
 
     # Inputs
-    - `stations`: a `list` of `MonitoringStation`s to filer.
+    - `stations`: a `list` of `MonitoringStation`s to filter.
     - `centre`: the (latitude, longitude) pair which the monitoring stations must be within the specified radius of.
     - `r`: the maximum distance a monitoring station can be from `centre`
     """
@@ -75,7 +75,7 @@ def haversine(p1, p2):
     Computes the great circle distance between 2 points on the earth using the haversine formula.
 
     # Inputs
-    - `p1` & `p2`: A pair of (longitude, latitude) coordinated to calculate the distance between.
+    - `p1` & `p2`: A pair of (longitude, latitude) coordinates to calculate the distance between.
 
     # Returns
     The distance in km over the surface of the earth between `p1` and `p2`, assuming the earth is a perfect sphere of radius 6371 km.
