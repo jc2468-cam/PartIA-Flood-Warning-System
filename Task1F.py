@@ -9,8 +9,8 @@ def run():
     stations = build_station_list()#
 
     # Sorting the list of stations with inconsistent data in alphabetical order
-    print(sorted([s.name for s in  inconsistent_typical_range_stations(stations)]))
+    print(sorted([station.name for station in inconsistent_typical_range_stations(stations)]))
 
 if __name__ == "__main__":
-    print("*** Task 1E: CUED Part IA Flood Warning System ***")
+    print("*** Task 1F: CUED Part IA Flood Warning System ***")
     run()
