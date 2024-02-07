@@ -29,7 +29,7 @@ def stations_within_radius(stations, centre, r):
     Filters a `list` of `MonitoringStation`s, returning ones which are within specified radius of geographic coordinate.
 
     # Inputs
-    - `stations`: a `list` of `MonitoringStation`s to filer.
+    - `stations`: a `list` of `MonitoringStation`s to filter.
     - `centre`: the (latitude, longitude) pair which the monitoring stations must be within the specified radius of.
     - `r`: the maximum distance a monitoring station can be from `centre`
     """
@@ -75,10 +75,33 @@ def haversine(p1, p2):
     Computes the great circle distance between 2 points on the earth using the haversine formula.
 
     # Inputs
-    - `p1` & `p2`: A pair of (longitude, latitude) coordinated to calculate the distance between.
+    - `p1` & `p2`: A pair of (longitude, latitude) coordinates to calculate the distance between.
 
     # Returns
     The distance in km over the surface of the earth between `p1` and `p2`, assuming the earth is a perfect sphere of radius 6371 km.
     """
     p1, p2 = [radians(e) for e in p1], [radians(e) for e in p2]
     return 12742 * asin(sqrt(sin(0.5 * (p1[0] - p2[0]))**2 + cos(p1[0])*cos(p2[0])*sin(0.5 * (p1[1] - p2[1]))**2))
+
+
+def rivers_by_station_number(stations, N):
+    """
+    Determining the 'N' number of rivers with the greatest number of 'MonitoringStation's.
+
+    # Inputs
+    - 'stations': a 'list' of 'MonitoringStation's
+    - 'N': number of rivers with greatest number of 'MonitoringStation's
+
+    # Returns
+    A list of 'N' river name and number of station tuples, sorted by the number of stations.
+    If there are more rivers with the same number of stations as the Nth entry, they are also included in the list.
+    """
+    river_stations = stations_by_river(stations)
+    river_n_stations = list()
+    for river, stas in river_stations.items():
+        a = river
+        b = len(stas)
+        river_n_stations += [(a, b)]
+    sorted_river_n_stations = sorted(river_n_stations, key = lambda x: x[1], reverse = True)
+
+    return print (sorted_river_n_stations[:N])
