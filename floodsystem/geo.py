@@ -96,12 +96,29 @@ def rivers_by_station_number(stations, N):
     A list of 'N' river name and number of station tuples, sorted by the number of stations.
     If there are more rivers with the same number of stations as the Nth entry, they are also included in the list.
     """
+    # Creating a dict of river name key and stations on river list value
     river_stations = stations_by_river(stations)
+
+    # Getting a list of river name and number of stations on that river tuple
     river_n_stations = list()
     for river, stas in river_stations.items():
         a = river
         b = len(stas)
         river_n_stations += [(a, b)]
+
+    # Sorting the list in descending order of river numbers
     sorted_river_n_stations = sorted(river_n_stations, key = lambda x: x[1], reverse = True)
+
+    # Checking if any more rivers have the same number of stations as the Nth river
+    counter = 0
+    while counter < 1500: # Max number of river with station was 1022
+        counter += 1
+        i = sorted_river_n_stations[N-1]
+        j = sorted_river_n_stations[N]
+        if i[1] == j[1]: 
+            N += 1
+        else:
+            break
+
 
     return print (sorted_river_n_stations[:N])
