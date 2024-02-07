@@ -1,7 +1,7 @@
 """Unit test for the geo module"""
 
 from floodsystem.station import MonitoringStation
-from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station, stations_by_river, haversine
+from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station, stations_by_river, haversine, rivers_station_number
 
 from math import pi
 
@@ -55,3 +55,10 @@ def test_stations_by_river():
 
     assert sum([station.name in ["Station 1", "Station 2"] for station in station_map["River 1"]]) == 2
     assert [station.name for station in station_map["River 2"]] == ["Station 3"]
+
+def test_rivers_station_number():
+    # Get dummy stations
+    stations = dummy_stations()
+
+    assert (rivers_station_number(stations, 1) == ([('River 1', 2)]))
+    assert (rivers_station_number(stations, 2) == ([('River 1', 2), ('River 2', 1)]))

@@ -84,7 +84,7 @@ def haversine(p1, p2):
     return 12742 * asin(sqrt(sin(0.5 * (p1[0] - p2[0]))**2 + cos(p1[0])*cos(p2[0])*sin(0.5 * (p1[1] - p2[1]))**2))
 
 
-def rivers_by_station_number(stations, N):
+def rivers_station_number(stations, N):
     """
     Determining the 'N' number of rivers with the greatest number of 'MonitoringStation's.
 
@@ -113,12 +113,15 @@ def rivers_by_station_number(stations, N):
     counter = 0
     while counter < 1500: # Max number of river with station was 1022
         counter += 1
-        i = sorted_river_n_stations[N-1]
-        j = sorted_river_n_stations[N]
-        if i[1] == j[1]: 
-            N += 1
-        else:
+        try:
+            i = sorted_river_n_stations[N-1]
+            j = sorted_river_n_stations[N]
+            if i[1] == j[1]: 
+                N += 1
+            else:
+                break
+        except:
             break
 
 
-    return print (sorted_river_n_stations[:N])
+    return sorted_river_n_stations[:N]
