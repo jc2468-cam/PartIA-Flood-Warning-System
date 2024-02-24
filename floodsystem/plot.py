@@ -20,8 +20,12 @@ def plot_water_levels(station, dates, levels):
     - `levels`: the water levels recorded at the monitoring station.
     """
 
-    # Plot
-    plt.plot(t, level)
+    # Plot the water levels
+    plt.plot(dates, levels)
+
+    # Plot the high/low levels
+    plt.plot(dates, station.typical_range[0], color = 'grey')
+    plt.plot(dates, station.typical_range[1], color = 'grey')
 
     # Add axis labels, rotate date labels and add plot title
     plt.xlabel('date')
