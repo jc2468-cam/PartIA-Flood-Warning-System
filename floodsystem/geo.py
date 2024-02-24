@@ -19,7 +19,7 @@ def stations_by_distance(stations, p):
     - `p`: a latitude and longitude pair to calculate the distances from.
 
     # Returns
-    A `list` of `MonitoringStation`s sorted in ~ascending~ order by distance from point `p`.
+    A `list` of `MonitoringStation`s sorted in ascending order by distance from point `p`.
     """
     return sorted([(station, haversine(station.coord, p)) for station in stations], key = lambda x: x[1])
 
