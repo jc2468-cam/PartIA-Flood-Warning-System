@@ -16,9 +16,9 @@ def stations_level_over_threshold(stations, tol):
     over_threshold = list()
     # Getting a list of station name and latest relative water level over tol
     for station in stations:
-        a = station.name()
+        a = station.name
         b = station.relative_water_level()
-        if b > tol and station.typical_range_consistent():
+        if b != None and b > tol and station.typical_range_consistent():
             over_threshold += [(a, b)]
     
     # Sorting the list in descending order of relative level
