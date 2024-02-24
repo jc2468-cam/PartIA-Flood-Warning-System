@@ -30,6 +30,9 @@ def stations_highest_rel_level(stations, N):
     """
     Returns a `list` of the first `N` stations with the highest relative water level, sorted by their relative water levels.
 
+    If Stations have inconsistent water levels, then they will by put to the end of the list, and only returned after all stations with consistent water levels,
+    even if these water levels are negative.
+
     # Inputs
     - `stations`: a `list` of `MonitoringStation`s to sort.
     - `N`: the maximum number of stations to return.
@@ -37,5 +40,5 @@ def stations_highest_rel_level(stations, N):
     # Returns
     A `list` of `MonitoringStation`s sorted in descending order by relative water level.
     """
-    return sorted(stations, key = lambda s: s.relative_water_level(), reverse=True)[:N]
+    return sorted(stations, key = lambda s: s.relative_water_level() if s.relative_water_level() != None else float("-inf"), reverse=True)[:N]
 
