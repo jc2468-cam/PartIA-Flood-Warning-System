@@ -9,6 +9,7 @@ import datetime
 from floodsystem.stationdata import build_station_list
 from floodsystem.datafetcher import fetch_measure_levels
 from floodsystem.analysis import polyfit
+from matplotlib.dates import date2num
 
 
 def plot_water_levels(station, dates, levels):
@@ -61,8 +62,10 @@ def plot_water_level_with_fit(station, dates, levels, p):
     # Fit polynomial to level data
     offset, polynomial = polyfit(dates, levels, p)
     # Create offset dates for inputs to the polynomial
-    date_array = np.array(dates)
+    date_array = date2num(dates)
     date_array -= offset
+    print(date_array)
+
     # Create predicted water levels form polynomial fit
     predicted = polynomial(date_array)
 
@@ -75,6 +78,7 @@ def plot_water_level_with_fit(station, dates, levels, p):
 
     ax.set_xlabel("time")
     ax.set_ylabel("water level / m")
+    ax.set_title(station.name)
 
     ax.legend()
 
