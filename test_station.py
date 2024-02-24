@@ -5,6 +5,7 @@
 
 from floodsystem.station import MonitoringStation, inconsistent_typical_range_stations
 from test_geo import dummy_stations
+from test_flood import dummy_stations as dummy_stations_latest
 
 
 def test_create_monitoring_station():
@@ -40,3 +41,13 @@ def test_inconsistent_typical_range_stations():
     stations = dummy_stations()
 
     assert inconsistent_typical_range_stations(stations) == [stations[0], stations[2]]
+
+def test_relative_water_level():
+     # Get dummy stations
+    stations = dummy_stations_latest()
+
+    assert stations[0].relative_water_level() == None
+    assert round(stations[1].relative_water_level(), 5) == -0.2
+    assert stations[2].relative_water_level() == None
+    assert round(stations[3].relative_water_level(), 5) == 1.2
+    assert stations[4].relative_water_level() == None
