@@ -79,6 +79,7 @@ def plot_water_level_with_fit(station, dates, levels, p):
     ax.set_xlabel("time")
     ax.set_ylabel("water level / m")
     ax.set_title(station.name)
+    ax.tick_params(axis='x', labelrotation=60)
 
     ax.legend()
 
