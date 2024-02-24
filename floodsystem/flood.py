@@ -23,8 +23,7 @@ def stations_level_over_threshold(stations, tol):
     
     # Sorting the list in descending order of relative level
     return sorted(over_threshold, key = lambda x: x[1], reverse = True)
-    
-               
+
 
 def stations_highest_rel_level(stations, N):
     """
@@ -41,4 +40,3 @@ def stations_highest_rel_level(stations, N):
     A `list` of `MonitoringStation`s sorted in descending order by relative water level.
     """
     return sorted(stations, key = lambda s: s.relative_water_level() if s.relative_water_level() != None else float("-inf"), reverse=True)[:N]
-
