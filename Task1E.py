@@ -1,7 +1,7 @@
 from floodsystem.stationdata import build_station_list
 from floodsystem.geo import rivers_with_station, stations_by_river, rivers_station_number
 
-N = 14
+N = 9
 
 def run():
     """Requirements for Task E"""
