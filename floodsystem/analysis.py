@@ -4,6 +4,8 @@ This module contains functions related to predicting the water levels for monito
 
 import numpy as np
 
+from matplotlib.dates import date2num
+
 
 def polyfit(dates, levels, p):
     """
@@ -17,10 +19,11 @@ def polyfit(dates, levels, p):
     # Returns
     A `tuple` containing a 0-offset for the dates and the fitted polynomial.
     """
-    # Convert dates to an array, which implicitly converts to a numerical representation
-    date_array = np.array(dates)
+    # Convert dates to a numerical representation
+    date_array = date2num(dates)
     # Offset the dates to have smaller values to avoid floating point errors
-    date_array -= date_array[0]
+    offset = date_array[0]
+    date_array -= offset
 
     # Get polynomial coefficients
     coefficients = np.polyfit(date_array, levels, p)
@@ -28,4 +31,4 @@ def polyfit(dates, levels, p):
     # Convert coefficient into a polynomial object
     polynomial = np.poly1d(coefficients)
 
-    return (date_array[0], polynomial)
+    return (offset, polynomial)
