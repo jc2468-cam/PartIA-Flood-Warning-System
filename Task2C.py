@@ -6,7 +6,7 @@ N = 10
 
 
 def run():
-    """Requirements for Task E"""
+    """Requirements for Task C"""
 
     # Build list of stations
     stations = build_station_list()
