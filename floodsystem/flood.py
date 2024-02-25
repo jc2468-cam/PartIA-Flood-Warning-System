@@ -6,6 +6,7 @@ import datetime
 import numpy as np
 from matplotlib.dates import date2num
 from floodsystem.datafetcher import fetch_measure_levels
+from floodsystem.analysis import polyfit
 
 
 def stations_level_over_threshold(stations, tol):
@@ -66,22 +67,22 @@ def get_risk_level(dates, levels, p):
     polynomial, offset = polyfit(dates, levels, p)
 
     # Prediction of time until water level reaches critical values based on current trend
-    coefficients = polynomial.polydir()
+    coefficients = polynomial.deriv()
     derivative = np.poly1d(coefficients)(date2num(dates)[-1] - offset)
     days_to_top = (1.2 - levels[-1]) / derivative
 
     # There probably already is a flood: severe risk
-    if level[-1] > 2:
+    if levels[-1] > 2:
         return 0
-    else if derivative > 0:
+    elif derivative > 0:
         # River level is above typical range and rising: severe risk
         if days_to_top < 0:
             return 0
         # River level is below typical high, but will soon reach this value at current rise rate: high risk
-        else if days_to_top < 1:
+        elif days_to_top < 1:
             return 1
         # River level is below typical high, but will reach this value fairly soon at current rise rate: moderate risk
-        else if days_to_top < 7:
+        elif days_to_top < 7:
             return 2
         # River level is in normal range and only rising slowly: low risk
         else:
@@ -91,7 +92,7 @@ def get_risk_level(dates, levels, p):
         if days_to_top > 5:
             return 1
         # River is high and falling fairly fast: moderate
-        else if days_to_top > 0:
+        elif days_to_top > 0:
             return 1
         # River is in normal range and falling: low risk
         else:
@@ -115,7 +116,10 @@ def get_all_town_risk_levels(stations, n, p):
                 risk = 2
             else:
                 dates, levels = fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=n))
-                risk = get_risk_level(dates, levels, p)
+                if len(dates) == 0:
+                    risk = 2
+                else:
+                    risk = get_risk_level(dates, levels, p)
             if not station.town in severities:
                 severities[station.town] = [0]*4
             severities[station.town][risk] += 1
