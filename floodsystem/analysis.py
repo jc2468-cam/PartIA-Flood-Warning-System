@@ -17,7 +17,7 @@ def polyfit(dates, levels, p):
     - `p`: the degree of the polynomial to fit to the data.
 
     # Returns
-    A `tuple` containing a 0-offset for the dates and the fitted polynomial.
+    A `tuple` containing the fitted polynomial and the 0-offset for the dates.
     """
     # Convert dates to a numerical representation
     date_array = date2num(dates)
@@ -39,4 +39,4 @@ def polyfit(dates, levels, p):
     # Convert coefficient into a polynomial object
     polynomial = np.poly1d(coefficients)
 
-    return (offset, polynomial)
+    return (polynomial, offset)
