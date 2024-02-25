@@ -25,6 +25,14 @@ def polyfit(dates, levels, p):
     offset = date_array[0]
     date_array -= offset
 
+    # Replaces `None` with the previous recorded value (or 1 if the first value is missing), allowing fitting to stations with partially missing data
+    for i in range(len(levels)):
+        if levels[i] == None:
+            if i == 0:
+                levels[i] == 1.
+            else:
+                levels[i] = levels[i-1]
+
     # Get polynomial coefficients
     coefficients = np.polyfit(date_array, levels, p)
 
