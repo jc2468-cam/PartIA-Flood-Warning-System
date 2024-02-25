@@ -2,9 +2,10 @@
 This module contains functions related to predicting the risk of flooding at monitoring stations.
 """
 
+import datetime
 import numpy as np
-
 from matplotlib.dates import date2num
+from floodsystem.datafetcher import fetch_measure_levels
 
 
 def stations_level_over_threshold(stations, tol):
@@ -95,3 +96,42 @@ def get_risk_level(dates, levels, p):
         # River is in normal range and falling: low risk
         else:
             return 3
+
+def get_all_town_risk_levels(stations, n, p):
+    """
+    Returns the assessed risk of all towns given its stations' water level history.
+
+    # Inputs
+    - `stations`: a `list` of all stations.
+    - `n`: the number of days to fetch latest measure levels from.
+    - `p`: the degree of the polynomial used internally to fit to the data.
+
+    """
+    towns = [list(), list(), list(), list()]
+    severities = dict()
+    for station in stations:
+        if station.town != None:
+            if station.typical_range_consistent() == False:
+                risk = 2
+            else:
+                dates, levels = fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=n))
+                risk = get_risk_level(dates, levels, p)
+            if not station.town in severities:
+                severities[station.town] = [0]*4
+            severities[station.town][risk] += 1
+
+    for town, risks in severities.items():
+        current_risk = 3
+        if risks[2] > 0:
+            current_risk = 2
+            if risks[2] > 1:
+                risks[1] += 1
+        if risks[1] > 0:
+            current_risk = 1
+            if risks[1] > 1:
+                risks[0] += 1
+        if risks[0] > 0:
+            current_risk = 0
+        towns[current_risk] += town 
+
+    return towns
