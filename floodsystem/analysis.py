@@ -17,7 +17,7 @@ def polyfit(dates, levels, p):
     - `p`: the degree of the polynomial to fit to the data.
 
     # Returns
-    A `tuple` containing a 0-offset for the dates and the fitted polynomial.
+    A `tuple` containing the fitted polynomial and the 0-offset for the dates.
     """
     # Convert dates to a numerical representation
     date_array = date2num(dates)
@@ -25,10 +25,18 @@ def polyfit(dates, levels, p):
     offset = date_array[0]
     date_array -= offset
 
+    # Replaces `None` with the previous recorded value (or 1 if the first value is missing), allowing fitting to stations with partially missing data
+    for i in range(len(levels)):
+        if levels[i] == None:
+            if i == 0:
+                levels[i] == 1.
+            else:
+                levels[i] = levels[i-1]
+
     # Get polynomial coefficients
     coefficients = np.polyfit(date_array, levels, p)
 
     # Convert coefficient into a polynomial object
     polynomial = np.poly1d(coefficients)
 
-    return (offset, polynomial)
+    return (polynomial, offset)

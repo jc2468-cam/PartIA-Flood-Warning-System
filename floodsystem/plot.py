@@ -60,11 +60,10 @@ def plot_water_level_with_fit(station, dates, levels, p):
     ax.plot(dates, levels, linewidth=2.0, label="Measured")
 
     # Fit polynomial to level data
-    offset, polynomial = polyfit(dates, levels, p)
+    polynomial, offset = polyfit(dates, levels, p)
     # Create offset dates for inputs to the polynomial
     date_array = date2num(dates)
     date_array -= offset
-    print(date_array)
 
     # Create predicted water levels form polynomial fit
     predicted = polynomial(date_array)
