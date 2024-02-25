@@ -136,6 +136,6 @@ def get_all_town_risk_levels(stations, n, p):
                 risks[0] += 1
         if risks[0] > 0:
             current_risk = 0
-        towns[current_risk] += town 
+        towns[current_risk].append(town) 
 
     return towns
