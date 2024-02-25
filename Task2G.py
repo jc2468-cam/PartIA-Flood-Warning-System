@@ -13,7 +13,7 @@ def run():
     # Update water levels
     update_water_levels(stations)
 
-    towns = get_all_town_risk_levels(stations[:20], 1, 3)
+    towns = get_all_town_risk_levels(stations[:], 1, 3, True)
 
     print('=== Towns at severe risk of flooding ===')
     print(*towns[0], sep = '\n')

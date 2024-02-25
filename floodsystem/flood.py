@@ -4,6 +4,7 @@ This module contains functions related to predicting the risk of flooding at mon
 
 import datetime
 import numpy as np
+import sys
 from matplotlib.dates import date2num
 from floodsystem.datafetcher import fetch_measure_levels
 from floodsystem.analysis import polyfit
@@ -98,7 +99,7 @@ def get_risk_level(dates, levels, p):
         else:
             return 3
 
-def get_all_town_risk_levels(stations, n, p):
+def get_all_town_risk_levels(stations, n, p, show_loading):
     """
     Returns the assessed risk of all towns given its stations' water level history.
 
@@ -106,11 +107,16 @@ def get_all_town_risk_levels(stations, n, p):
     - `stations`: a `list` of all stations.
     - `n`: the number of days to fetch latest measure levels from.
     - `p`: the degree of the polynomial used internally to fit to the data.
-
+    - `show_loading`: whether to print a loading bar.
     """
+    total_stations = len(stations)
     towns = [list(), list(), list(), list()]
     severities = dict()
-    for station in stations:
+    for (i, station) in enumerate(stations):
+        # shows a progress bar. This is printed to stderr so that the progress can be seen even if the output is piped to a file
+        if show_loading:
+            progress = (i / total_stations)
+            print("Calculating risk levels: [" + "="*int(progress * 20) + " "*(20-int(progress * 20)) + f"]   {round(progress * 100, 2)}%   ", end = "\r", file=sys.stderr)
         if station.town != None:
             if station.typical_range_consistent() == False:
                 risk = 2
@@ -138,4 +144,7 @@ def get_all_town_risk_levels(stations, n, p):
             current_risk = 0
         towns[current_risk].append(town) 
 
+    # starts a new line so text printed after this function is properly formatted.
+    if show_loading:
+        print("Calculating risk levels: [====================]   100%   \n", file=sys.stderr)
     return towns
