@@ -14,10 +14,6 @@ def run():
     update_water_levels(stations)
 
     
-
-
-
-    
 if __name__ == "__main__":
     print("*** Task 2G: CUED Part IA Flood Warning System ***")
     run()

@@ -2,6 +2,11 @@
 This module contains functions related to predicting the risk of flooding at monitoring stations.
 """
 
+import numpy as np
+
+from matplotlib.dates import date2num
+
+
 def stations_level_over_threshold(stations, tol):
     """
     Returns a list of tuples, where each tuple holds (i) a station (object) at which the latest relative water level is over tol
@@ -56,3 +61,37 @@ def get_risk_level(dates, levels, p):
     # Returns
     A numerical assessment of the risk level at the station.
     """
+    # Create prediction polynomial
+    polynomial, offset = polyfit(dates, levels, p)
+
+    # Prediction of time until water level reaches critical values based on current trend
+    coefficients = polynomial.polydir()
+    derivative = np.poly1d(coefficients)(date2num(dates)[-1] - offset)
+    days_to_top = (1.2 - levels[-1]) / derivative
+
+    # There probably already is a flood: severe risk
+    if level[-1] > 2:
+        return 0
+    else if derivative > 0:
+        # River level is above typical range and rising: severe risk
+        if days_to_top < 0:
+            return 0
+        # River level is below typical high, but will soon reach this value at current rise rate: high risk
+        else if days_to_top < 1:
+            return 1
+        # River level is below typical high, but will reach this value fairly soon at current rise rate: moderate risk
+        else if days_to_top < 7:
+            return 2
+        # River level is in normal range and only rising slowly: low risk
+        else:
+            return 3
+    else:
+        # River level is high and not falling very fast: high
+        if days_to_top > 5:
+            return 1
+        # River is high and falling fairly fast: moderate
+        else if days_to_top > 0:
+            return 1
+        # River is in normal range and falling: low risk
+        else:
+            return 3
