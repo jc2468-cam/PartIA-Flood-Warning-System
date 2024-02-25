@@ -40,3 +40,19 @@ def stations_highest_rel_level(stations, N):
     A `list` of `MonitoringStation`s sorted in descending order by relative water level.
     """
     return sorted(stations, key = lambda s: s.relative_water_level() if s.relative_water_level() != None else float("-inf"), reverse=True)[:N]
+
+def get_risk_level(dates, levels, p):
+    """
+    Returns the assessed risk of a station given its water level history.
+
+    If Stations have inconsistent water levels, then they will by put to the end of the list, and only returned after all stations with consistent water levels,
+    even if these water levels are negative.
+
+    # Inputs
+    - `dates`: a `list` of the dates of the measurements.
+    - `levels`: the water level measurements.
+    - `p`: the degree of the polynomial used internally to fit to the data.
+
+    # Returns
+    A numerical assessment of the risk level at the station.
+    """
